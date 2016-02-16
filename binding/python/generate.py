@@ -25,34 +25,45 @@ def import_sch_types(mod):
 def import_rbd_types(mod):
   mod.add_class('Body', foreign_cpp_namespace='rbd', import_from_module='rbdyn')
   mod.add_class('Joint', foreign_cpp_namespace='rbd', import_from_module='rbdyn')
-  mod.add_class('MultiBody', foreign_cpp_namespace='rbd', import_from_module='rbdyn')
-  mod.add_class('MultiBodyConfig', foreign_cpp_namespace='rbd', import_from_module='rbdyn')
+  mb = mod.add_class('MultiBody', foreign_cpp_namespace='rbd', import_from_module='rbdyn')
+  mb.add_copy_constructor()
+  mbc = mod.add_class('MultiBodyConfig', foreign_cpp_namespace='rbd', import_from_module='rbdyn')
+  mbc.add_copy_constructor()
   mod.add_class('Jacobian', foreign_cpp_namespace='rbd', import_from_module='rbdyn')
   mod.add_class('CoMJacobianDummy', foreign_cpp_namespace='rbd', import_from_module='rbdyn')
 
-
-
 def import_sva_types(mod):
-  mod.add_class('MotionVecd', foreign_cpp_namespace='sva', import_from_module='spacevecalg')
-  mod.add_class('ForceVecd', foreign_cpp_namespace='sva', import_from_module='spacevecalg')
+  motiovec = mod.add_class('MotionVecd', foreign_cpp_namespace='sva', import_from_module='spacevecalg')
+  motiovec.add_copy_constructor()
+  forcevec = mod.add_class('ForceVecd', foreign_cpp_namespace='sva', import_from_module='spacevecalg')
+  forcevec.add_copy_constructor()
   mod.add_class('RBInertiad', foreign_cpp_namespace='sva', import_from_module='spacevecalg')
   mod.add_class('ABInertiad', foreign_cpp_namespace='sva', import_from_module='spacevecalg')
-  mod.add_class('PTransformd', foreign_cpp_namespace='sva', import_from_module='spacevecalg')
+  ptransform = mod.add_class('PTransformd', foreign_cpp_namespace='sva', import_from_module='spacevecalg')
+  ptransform.add_copy_constructor()
 
 
 
 def import_eigen3_types(mod):
-  mod.add_class('Vector2d', foreign_cpp_namespace='Eigen', import_from_module='eigen3')
-  mod.add_class('Vector3d', foreign_cpp_namespace='Eigen', import_from_module='eigen3')
-  mod.add_class('Vector6d', foreign_cpp_namespace='Eigen', import_from_module='eigen3')
+  vec2 = mod.add_class('Vector2d', foreign_cpp_namespace='Eigen', import_from_module='eigen3')
+  vec2.add_copy_constructor()
+  vec3 = mod.add_class('Vector3d', foreign_cpp_namespace='Eigen', import_from_module='eigen3')
+  vec3.add_copy_constructor()
+  vec6 = mod.add_class('Vector6d', foreign_cpp_namespace='Eigen', import_from_module='eigen3')
+  vec6.add_copy_constructor()
 
-  mod.add_class('Matrix3d', foreign_cpp_namespace='Eigen', import_from_module='eigen3')
-  mod.add_class('Matrix6d', foreign_cpp_namespace='Eigen', import_from_module='eigen3')
+  matrix3 = mod.add_class('Matrix3d', foreign_cpp_namespace='Eigen', import_from_module='eigen3')
+  matrix3.add_copy_constructor()
+  matrix6 = mod.add_class('Matrix6d', foreign_cpp_namespace='Eigen', import_from_module='eigen3')
+  matrix6.add_copy_constructor()
 
-  mod.add_class('MatrixXd', foreign_cpp_namespace='Eigen', import_from_module='eigen3')
-  mod.add_class('VectorXd', foreign_cpp_namespace='Eigen', import_from_module='eigen3')
+  matrixx = mod.add_class('MatrixXd', foreign_cpp_namespace='Eigen', import_from_module='eigen3')
+  matrixx.add_copy_constructor()
+  vectorx = mod.add_class('VectorXd', foreign_cpp_namespace='Eigen', import_from_module='eigen3')
+  vectorx.add_copy_constructor()
 
-  mod.add_class('Quaterniond', foreign_cpp_namespace='Eigen', import_from_module='eigen3')
+  quat = mod.add_class('Quaterniond', foreign_cpp_namespace='Eigen', import_from_module='eigen3')
+  quat.add_copy_constructor()
 
 
 def build_boost_timer(tasks):
@@ -546,6 +557,7 @@ def build_qp(tasks):
                  [], is_const=True)
 
   # SolverData
+  solData.add_copy_constructor()
   solData.add_method('nrVars', retval('int'), [], is_const=True)
   solData.add_method('totalAlphaD', retval('int'), [], is_const=True)
   solData.add_method('totalLambda', retval('int'), [], is_const=True)
@@ -1305,6 +1317,7 @@ def build_qp(tasks):
   oriTrackTask.add_method('bodyAxis', retval('Eigen::Vector3d'), [], is_const=True)
 
   # JointsSelector
+  jointsSelector.add_copy_constructor()
   jointsSelector.add_constructor([param('const std::vector<rbd::MultiBody>&', 'mbs'),
                                   param('int', 'robotIndex'),
                                   param('tasks::qp::HighLevelTask*', 'hl',
